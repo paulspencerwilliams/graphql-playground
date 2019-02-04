@@ -10,3 +10,4 @@
 rootProject.name = 'graphql-playground'
 
 include 'graphql-playground-api'
+include 'graphql-playground-ui'

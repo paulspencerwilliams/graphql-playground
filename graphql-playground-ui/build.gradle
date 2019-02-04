@@ -1,0 +1,60 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+    dependencies {
+        classpath 'com.moowork.gradle:gradle-node-plugin:1.2.0'
+    }
+}
+
+apply plugin: 'base'
+apply plugin: 'com.moowork.node'
+
+node {
+    version = '11.3.0'
+    yarnVersion = 'v1.12.3'
+    download = true
+}
+
+yarn_build {
+    inputs.files fileTree("public")
+    inputs.files fileTree("src")
+
+    inputs.files 'package.json'
+    inputs.files 'yarn.lock'
+
+    outputs.dir 'build'
+}
+
+task packageGraphQLPlaygroundUI(type: Zip) {
+    dependsOn yarn_build
+    baseName 'graphql-playground-ui'
+    extension 'jar'
+    destinationDir file("${projectDir}/build_packageGraphQLPlaygroundUI")
+    from('build') {
+        into 'static'
+    }
+}
+
+configurations {
+    yarnResources
+}
+
+configurations.default.extendsFrom(configurations.yarnResources)
+
+artifacts {
+    yarnResources(packageGraphQLPlaygroundUI.archivePath) {
+        builtBy packageGraphQLPlaygroundUI
+        type "jar"
+    }
+}
+
+assemble.dependsOn packageGraphQLPlaygroundUI
+
+clean {
+    delete packageGraphQLPlaygroundUI.archivePath
+}
