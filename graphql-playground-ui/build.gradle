@@ -55,6 +55,27 @@ artifacts {
 
 assemble.dependsOn packageGraphQLPlaygroundUI
 
+String testsExecuteMarkerName = "${projectDir}/.tests.executed"
+
+task test(type: YarnTask) {
+    dependsOn assemble
+    environment CI:'true'
+    args = ['test']
+
+    inputs.files fileTree('src')
+    inputs.files 'package.json'
+    inputs.files 'yarn.lock'
+
+    doLast{
+        new File(testsExecuteMarkerName).text = 'delete this file to force re-execution JavaScript tests'
+    }
+
+    outputs.file testsExecuteMarkerName
+}
+
+check.dependsOn(test)
+
 clean {
     delete packageGraphQLPlaygroundUI.archivePath
+    delete testsExecuteMarkerName
 }
