@@ -3,7 +3,23 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
-  render() {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            welcomeMessage: 'Welcome from the Reacts'
+        }
+    }
+
+    componentDidMount() {
+        fetch("/welcome-message").then(response => {
+            return response.text()
+        }).then(text => {
+            this.setState({welcomeMessage: text})
+        })
+    }
+
+    render() {
     return (
       <div className="App">
         <header className="App-header">
@@ -17,7 +33,7 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn React
+              {this.state.welcomeMessage}
           </a>
         </header>
       </div>
