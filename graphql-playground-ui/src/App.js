@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {ApolloProvider} from 'react-apollo';
 import ApolloClient from 'apollo-boost';
 import logo from './logo.svg';
@@ -9,24 +9,8 @@ const client = new ApolloClient({
     uri: '/graphql'
 })
 
-class App extends Component {
-    constructor(props) {
-        super(props)
+const App  = () => {
 
-        this.state = {
-            welcomeMessage: 'Welcome from the Reacts'
-        }
-    }
-
-    componentDidMount() {
-        fetch("/welcome-message").then(response => {
-            return response.text()
-        }).then(text => {
-            this.setState({welcomeMessage: text})
-        })
-    }
-
-    render() {
         return (
             <ApolloProvider client={client}>
                 <div className="App">
@@ -41,7 +25,6 @@ class App extends Component {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            {this.state.welcomeMessage}
                         </a>
                         <Book1Name/>
                     </header>
@@ -49,7 +32,6 @@ class App extends Component {
 
             </ApolloProvider>
         );
-    }
 }
 
 export default App;
