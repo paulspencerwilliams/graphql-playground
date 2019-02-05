@@ -15,3 +15,21 @@ To run the UI in HMR mode most likely against the API from a Java IDE
 cd graphql-playground-ui
 yarn start
 ```
+
+To try out the GraphQL API presented in [GraphQL-Java's tutorial](https://www.graphql-java.com/tutorials/getting-started-with-spring-boot/) with GraphQL Playground
+
+```bash
+brew cask install graphql-playground
+```
+
+Launch graphql-playground and execute query against http endpoint `http://localhost:8080/graphql` 
+
+```graphql
+{
+  bookById(id: "book-1") {
+    id
+    name
+  }
+}
+
+```
