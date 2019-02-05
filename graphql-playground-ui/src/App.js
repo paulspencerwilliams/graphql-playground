@@ -3,6 +3,7 @@ import {ApolloProvider} from 'react-apollo';
 import ApolloClient from 'apollo-boost';
 import logo from './logo.svg';
 import './App.css';
+import Book1Name from "./Book1Name";
 
 const client = new ApolloClient({
     uri: '/graphql'
@@ -42,6 +43,7 @@ class App extends Component {
                         >
                             {this.state.welcomeMessage}
                         </a>
+                        <Book1Name/>
                     </header>
                 </div>
 
